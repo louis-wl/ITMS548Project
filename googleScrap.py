@@ -1,8 +1,8 @@
 import requests
-from tabulate import tabulate
+import tkinter as tk
+from tkinter import ttk
 
-api_key = "9dd5e981e95297329892eb834c4065ad10896138c3f44c00a36ebfc9e546b98b"
-
+api_key = #INSERT API KEY HERE WITH "APIKEY"
 url = "https://serpapi.com/search"
 
 params = {
@@ -15,6 +15,9 @@ params = {
 response = requests.get(url, params=params)
 data = response.json()
 
+root = tk.Tk()
+root.title("Chicago Crime Search Results")
+
 table_data = []
 
 for result in data['organic_results']:
@@ -22,4 +25,13 @@ for result in data['organic_results']:
     link = result['link']
     table_data.append([title, link])
 
-print(tabulate(table_data, headers=['Title', 'URL'], tablefmt='grid'))
+tree = ttk.Treeview(root, columns=('Title', 'URL'), show='headings')
+tree.heading('Title', text='Title')
+tree.heading('URL', text='URL')
+
+for row in table_data:
+    tree.insert('', 'end', values=row)
+
+tree.pack(fill='both', expand=True)
+
+root.mainloop()
