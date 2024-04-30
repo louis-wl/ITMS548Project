@@ -7,6 +7,7 @@ output:
   html_document:
     self_contained: true
 ---
+
   
 ```{r setup, include=FALSE}
 # Set CRAN repository and load required packages
@@ -59,6 +60,20 @@ print(names(crime_types_list))
 ```{r}
 # UI and Server setup together
 ui <- fluidPage(
+  tags$head(
+    # CSS
+    tags$style(HTML("
+      #map { 
+        height: 100%; 
+        width: 100%;
+        margin-top: 20px;
+      }
+      .leaflet-control-attribution,
+      .leaflet-control-layers {
+        display: none !important;  # Hide leaflet's default control elements
+      }
+    "))
+  ),
   titlePanel("Crime Data Analysis"),
   sidebarLayout(
     sidebarPanel(
